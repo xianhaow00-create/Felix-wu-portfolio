@@ -1,0 +1,42 @@
+/* CursorMask — the "second image" layer revealed through the cursor mask.
+   A brighter, warmer, more saturated copy of the hero flower clip, clipped
+   by a soft circular mask (set per-frame in CursorMask.jsx).
+
+   - z-index: 2 → above the dim base video + tint + grade + centre pop, but
+     below CursorBloom (also z-2, rendered later so flowers glow on top) and
+     BloomText (z-3) / ripple (z-4). The value phrases still read on top.
+   - pointer-events: none — the mask tracks the window cursor; the layer must
+     never block the title or CTAs.
+   - mask-repeat: the gradient is a hard-positioned circle, so no-repeat; the
+     alpha channel drives visibility (opaque centre shows, transparent edge hides). */
+
+.hero-video-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  /* Fallback: fully clipped until JS sets the gradient (avoids a flash of
+     the full bright video before the first frame). */
+  -webkit-mask-image: radial-gradient(circle 1px at 50% 44%, #000 0, transparent 100%);
+          mask-image: radial-gradient(circle 1px at 50% 44%, #000 0, transparent 100%);
+}
+
+.hero-video-reveal-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 44%;
+  /* The "vivid" treatment — noticeably brighter / warmer / more saturated
+     than the dim crimson base so the cursor reveal pops for HR. Slight
+     scale keeps it aligned with the base clip inside the hole. */
+  filter: saturate(1.92) contrast(1.16) brightness(1.05) hue-rotate(-5deg);
+  transform: scale(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video-reveal-el { animation: none; }
+}

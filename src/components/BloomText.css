@@ -1,0 +1,119 @@
+/* BloomText — five floating value phrases over the bloom canvas.
+   Each phrase holds its position and fades in/out on a staggered
+   schedule synced with Bloom's 24s loop.
+
+   Layout note: every phrase sits in a SINGLE centred vertical column
+   over the flower (centre band), never on top of the title (left),
+   the rails (right margin), or the pills/corner (bottom). The 12 %
+   vertical gap between rows gives clear separation even during the
+   brief cross-fades. */
+
+.bloom-text {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;            /* above bloom canvas, below hero-veil */
+  overflow: hidden;
+}
+
+.bloom-text-item {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 14px);
+  animation: bloomTextFadeCenter 24s cubic-bezier(.4, .1, .2, 1) infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes bloomTextFadeCenter {
+  0%   { opacity: 0; transform: translate(-50%, 14px); }
+  3%   { opacity: 0.95; transform: translate(-50%, 0); }
+  16%  { opacity: 0.95; transform: translate(-50%, -2px); }
+  22%  { opacity: 0; transform: translate(-50%, -10px); }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+
+/* Persistent hero greeting — removed in Round 21. Styles kept as a
+   placeholder for future re-introduction if needed; the component no
+   longer renders these elements. */
+
+/* Position variants — single centred column, vertical cascade from
+   upper-mid area down to lower-hero. Round 16: 專注 was at top:6% and
+   was clipped/covered by the fixed nav + brand strip, so all five
+   positions were pushed down by ~8% to live in the open mid-band. */
+.bloom-text-item--tl { top: 16%; }
+.bloom-text-item--tr { top: 28%; }
+.bloom-text-item--ml { top: 40%; }
+.bloom-text-item--mr { top: 52%; }
+.bloom-text-item--bc { top: 64%; }
+
+/* English subtitle — Playfair Display italic for editorial cohesion with
+   the hero title accent; cream so it reads against the deep crimson flower */
+.bloom-text-en {
+  display: block;
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(11px, 1vw, 15px);
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: rgba(255, 240, 225, 0.92);
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.65);
+}
+
+/* Chinese — kept in warm cream (was brand-red, but unreadable on the
+   crimson flower). Cream + strong dark outline + faint warm halo gives
+   the "one with the flower" feel from the showreel while staying
+   legible at every viewport. */
+.bloom-text-cn {
+  display: block;
+  font-family: var(--f-cn-serif, var(--f-en-serif));
+  font-size: clamp(24px, 2.4vw, 38px);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: rgba(255, 240, 225, 0.95);
+  line-height: 1.05;
+  text-shadow:
+    0 0 24px rgba(255, 200, 180, 0.45),
+    0 1px 14px rgba(20, 4, 2, 0.85),
+    0 0 2px rgba(20, 4, 2, 0.9);
+}
+
+/* Small accent dot to anchor each phrase */
+.bloom-text-item::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -16px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff3b2f;
+  opacity: 0.9;
+  box-shadow: 0 0 12px rgba(255, 230, 200, 0.65);
+}
+
+/* Reduced motion: keep text visible (less jarring) and disable drift */
+@media (prefers-reduced-motion: reduce) {
+  .bloom-text-item {
+    animation: none !important;
+    opacity: 0.55;
+    transform: translate(-50%, 0) !important;
+  }
+  .bloom-text-item:nth-child(n+2) {
+    display: none;       /* only show first for reduced-motion users */
+  }
+}
+
+/* On narrower screens, drop the lower phrases to avoid clutter */
+@media (max-width: 1100px) {
+  .bloom-text-item--bc { top: 58%; }
+}
+@media (max-width: 720px) {
+  .bloom-text-item--mr,
+  .bloom-text-item--bc { display: none; }
+  .bloom-text-cn { font-size: clamp(20px, 5vw, 28px); }
+}

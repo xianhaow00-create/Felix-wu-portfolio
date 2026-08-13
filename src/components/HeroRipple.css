@@ -1,0 +1,15 @@
+/* HeroRipple — full-bleed Canvas drawing the flat water-ripple scrolling
+   background. Same z-stack as the old video: sits inside .hero-bg with
+   the BloomText overlay and the hero veil/grain on top. */
+
+.hero-ripple {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--bg);
+  /* hint that the canvas manages its own rendering — no compositor
+     surprises from transforms */
+  will-change: auto;
+}

@@ -1,0 +1,179 @@
+/* Portrait Stage — editorial-style bilingual layout.
+   English serif (Newsreader) + Chinese serif (Noto Serif SC) words
+   scattered around a large B&W portrait, magazine-cover style.
+
+   Round 15: the main portrait now sits inside a `.portrait-cluster`
+   that *also* hosts a polaroid wall (PortraitPhotoWall) absolutely
+   positioned around it. The frame is shrunk (880→640 max width) so
+   the polaroid cards can clearly surround the subject instead of
+   being a tiny stripe in negative space. */
+
+.portrait-stage {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 96px;
+}
+
+/* Bilingual word pair */
+.portrait-word {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--f-en-serif);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  pointer-events: none;
+  user-select: none;
+}
+.portrait-word--xl { font-size: clamp(96px, 12vw, 192px); font-weight: 500; }
+.portrait-word--lg { font-size: clamp(48px, 6vw, 96px); }
+.portrait-word--md { font-size: clamp(32px, 4vw, 64px); }
+
+.portrait-word--italic  { font-style: italic; }
+.portrait-word--roman   { font-style: normal; }
+.portrait-word--accent  { color: var(--accent); }
+
+.portrait-word-cn {
+  font-family: var(--f-cn-serif);
+  font-size: 0.26em;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1;
+  color: var(--ink-3);
+}
+.portrait-word--accent .portrait-word-cn { color: var(--accent); }
+
+/* 4-corner positioning — these still live in grid rows 1 (top) and 3 (bottom)
+   so they don't collide with the cluster in row 2. */
+.portrait-word--tl {
+  grid-row: 1; grid-column: 1;
+  justify-self: start; align-self: end;
+  margin-bottom: 18px;
+  align-items: flex-start;
+}
+.portrait-word--tr {
+  grid-row: 1; grid-column: 1;
+  justify-self: end; align-self: end;
+  margin-bottom: 18px;
+  align-items: flex-end; text-align: right;
+}
+.portrait-word--bl {
+  grid-row: 3; grid-column: 1;
+  justify-self: start; align-self: start;
+  align-items: flex-start;
+}
+.portrait-word--br {
+  grid-row: 3; grid-column: 1;
+  justify-self: end; align-self: start;
+  align-items: flex-end; text-align: right;
+}
+
+/* ---- Cluster (row 2): hosts the centered portrait frame AND the
+   surrounding polaroid wall. Flex-centered so the frame floats in
+   the middle of a generously tall row; polaroid cards position
+   themselves around it via percentages inside .portrait-photo-wall. */
+.portrait-cluster {
+  grid-row: 2; grid-column: 1;
+  position: relative;
+  width: 100%;
+  min-height: clamp(560px, 60vh, 720px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* a touch of padding so polaroid cards never hit the .wrap edge */
+  padding: 0 clamp(12px, 2vw, 32px);
+}
+
+/* Portrait frame — centered, smaller (Round 15) so polaroids can
+   surround it without crowding. The frame sits in front of the
+   polaroids (z-index 2) so the Wu.F mark / PORTRAIT stamp / ©
+   always read clean. */
+.portrait-frame {
+  position: relative;
+  width: min(640px, 58%);
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-deep);
+  box-shadow:
+    0 1px 0 var(--line),
+    0 30px 80px -30px rgba(10, 10, 8, .45);
+  isolation: isolate;
+  z-index: 2;
+}
+.portrait-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: contrast(1.05) saturate(.85);
+  display: block;
+}
+.portrait-mark {
+  position: absolute;
+  top: 18px; left: 22px;
+  font-family: var(--f-cn-serif);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--bg);
+  background: rgba(10, 10, 8, .7);
+  padding: 4px 10px;
+  border-radius: 999px;
+  z-index: 3;
+}
+.portrait-stamp {
+  position: absolute;
+  bottom: 18px; left: 22px;
+  font-family: var(--f-en-serif);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bg);
+  opacity: 0.78;
+  z-index: 3;
+}
+.portrait-cornermark {
+  position: absolute;
+  bottom: 18px; right: 22px;
+  font-family: var(--f-en-serif);
+  font-size: 18px;
+  color: var(--bg);
+  opacity: 0.8;
+  z-index: 3;
+}
+
+/* Caption strip */
+.portrait-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.portrait-caption-quote {
+  font-family: var(--f-cn-serif);
+  font-size: 15px;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+}
+
+/* Mobile — cluster narrows but keeps the same shape; polaroids hide
+   the side cards in their own media query (PortraitPhotoWall.css). */
+@media (max-width: 1100px) {
+  .portrait-word--xl { font-size: clamp(56px, 16vw, 88px); }
+  .portrait-word--lg { font-size: clamp(32px, 9vw, 56px); }
+  .portrait-word--md { font-size: clamp(24px, 7vw, 40px); }
+  .portrait-word-cn { font-size: 0.3em; }
+
+  .portrait-cluster {
+    min-height: clamp(440px, 70vh, 560px);
+  }
+  .portrait-frame { width: min(560px, 70%); }
+}

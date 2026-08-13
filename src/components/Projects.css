@@ -1,0 +1,320 @@
+/* Projects — Main.png inspired layout
+   • alternating image/title alignment
+   • single red accent throughout
+   • tighter editorial typography, generous breathing
+*/
+
+.projects {
+  background: var(--bg);
+  position: relative;
+}
+
+.projects-head {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 80px;
+  margin-bottom: 80px;
+  align-items: end;
+}
+.projects-head-left {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.projects-title {
+  font-family: var(--f-en-serif);
+  font-size: var(--t-h1);
+  line-height: 1.02;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.projects-title em { font-style: italic; }
+.projects-intro {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  max-width: 480px;
+  padding-bottom: 12px;
+}
+
+/* ── Grid ────────────────────────────────────────────────────────────── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 56px 28px;
+}
+
+/* Card sizing — covers how many columns */
+.project-card.card--lg { grid-column: span 12; }
+.project-card.card--md { grid-column: span 6; }
+.project-card.card--sm { grid-column: span 4; }
+
+/* Each card is a row of [image | meta]; can flip */
+.project-card { display: block; text-decoration: none; color: inherit; }
+.project-row {
+  display: grid;
+  gap: 36px;
+  align-items: start;
+}
+.card--lg .project-row { grid-template-columns: 1.55fr 1fr; gap: 56px; }
+.card--md .project-row { grid-template-columns: 1fr 1fr; gap: 28px; }
+.card--sm .project-row { grid-template-columns: 1fr; gap: 18px; }
+.card--sm.is-flipped .project-row,
+.card--lg.is-flipped .project-row { direction: rtl; }
+.card--lg.is-flipped .project-row > *,
+.card--md.is-flipped .project-row > * { direction: ltr; }
+
+/* ── Cover ────────────────────────────────────────────────────────────── */
+.project-cover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--bg-deep);
+  isolation: isolate;
+  box-shadow: 0 1px 0 var(--line);
+}
+.project-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 1.1s var(--ease-out), filter .8s var(--ease);
+  filter: saturate(.95);
+}
+.card--lg .project-cover { aspect-ratio: 16 / 9; }
+.card--md .project-cover { aspect-ratio: 4 / 3; }
+.card--sm .project-cover { aspect-ratio: 3 / 4; }
+.card--lg .project-cover img,
+.card--md .project-cover img { object-fit: cover; height: 100%; }
+
+.project-corner-mark {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  background: rgba(245, 243, 236, .92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--ink);
+  transform: scale(.7);
+  opacity: 0;
+  transition: transform .45s var(--ease-out), opacity .35s var(--ease);
+}
+.project-card:hover .project-cover img { transform: scale(1.04); }
+.project-card:hover .project-corner-mark { transform: scale(1); opacity: 1; }
+
+/* ── Meta ────────────────────────────────────────────────────────────── */
+.project-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+.project-meta-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.project-cat-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-weight: 500;
+}
+.project-cat-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.project-year {
+  color: var(--ink-4);
+}
+
+.project-title-en {
+  font-family: var(--f-en-serif);
+  font-size: clamp(24px, 2vw, 34px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-top: 8px;
+}
+.card--lg .project-title-en {
+  font-size: clamp(32px, 3vw, 52px);
+}
+.project-title-cn {
+  font-size: 14px;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+.project-divider {
+  display: block;
+  width: 36px;
+  height: 1.5px;
+  background: var(--accent);
+  margin: 14px 0 8px;
+}
+.project-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 88%;
+}
+.project-meta-foot {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.project-type {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-en-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+  transition: color .25s var(--ease);
+}
+.project-link .arrow { transition: transform .35s var(--ease-out); }
+.project-card:hover .project-link { color: var(--accent); }
+.project-card:hover .project-link .arrow { transform: translate(3px, -3px); }
+
+/* Footer */
+.projects-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* CV footer CTA — wraps the pointer + the Read full CV button */
+.cv-foot-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* "Look here" glass pointer — a small glassmorphism pill with a
+   pointing arrow, sitting to the LEFT of the Read full CV button.
+   Floats gently to draw the eye, then settles. */
+.cv-pointer {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 16px 9px 18px;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 28px -14px rgba(20, 4, 2, 0.22),
+    0 2px 6px -2px rgba(20, 4, 2, 0.08);
+  pointer-events: none;
+  user-select: none;
+  transform-origin: 100% 50%;
+  animation: cvPointerFloat 2.6s cubic-bezier(.4, .1, .2, 1) infinite;
+  position: relative;
+}
+/* Subtle red glow under the pill to match the brand */
+.cv-pointer::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse 80% 120% at 80% 50%,
+    rgba(255, 59, 47, 0.10), transparent 70%);
+  pointer-events: none;
+}
+
+.cv-pointer-text {
+  font-family: var(--f-en-serif);
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.cv-pointer-arrow {
+  display: inline-block;
+  position: relative;
+  width: 34px;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+/* Arrow head — small chevron at the right end */
+.cv-pointer-arrow::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 1.5px solid var(--accent);
+  border-right: 1.5px solid var(--accent);
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 1px;
+}
+
+@keyframes cvPointerFloat {
+  0%, 100% { transform: translateX(0)    rotate(0deg); }
+  35%      { transform: translateX(-7px) rotate(-1.5deg); }
+  70%      { transform: translateX(2px)  rotate(0.8deg); }
+}
+
+/* Reduced motion: keep the pointer visible but stop the float */
+@media (prefers-reduced-motion: reduce) {
+  .cv-pointer { animation: none; }
+}
+
+/* Responsive */
+@media (max-width: 1280px) {
+  .card--sm { grid-column: span 6; }
+}
+@media (max-width: 1100px) {
+  .projects-head { grid-template-columns: 1fr; gap: 32px; }
+  .card--lg,
+  .card--md,
+  .card--sm { grid-column: span 12; }
+  .card--lg .project-row,
+  .card--md .project-row,
+  .card--sm .project-row { grid-template-columns: 1fr; direction: ltr; }
+  .card--lg.is-flipped .project-row,
+  .card--md.is-flipped .project-row { direction: ltr; }
+  /* Hide the Look here pointer on narrow screens to keep the
+     footer clean — the label still reads without it. */
+  .cv-pointer { display: none; }
+}

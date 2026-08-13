@@ -1,0 +1,340 @@
+/* Hero — fullscreen hero video with restrained white typography on top.
+   Round 16: cream scrim removed (the title now needs to read against the
+   dark crimson video, so we removed the top-left veil and changed all
+   main text to warm-cream with a dark text-shadow). Bottom darken kept
+   so the hero still transitions cleanly into the cream site below. */
+.hero {
+  position: relative;
+  height: 100vh;
+  /* Round 31: removed min-height: 760px. It forced the hero taller than a
+     typical ~720px laptop viewport, pushing the bottom pills / corner
+     stamps below the fold ("why doesn't it fit in one screen?"). Hero is
+     now exactly 100vh; the inner grid + reduced title size (R31 --t-display
+     88px) fit comfortably with breathing room above the title. */
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+  background: #1a0606;
+  color: var(--ink);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+/* Veil — soft bottom darken only (no more top-left cream scrim) so the
+   dark crimson video + goddess-face moment is the full background and
+   the white title reads against it. The darken starts at 70% so the
+   flower-bloom field in the lower-mid band stays bright. */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(20, 4, 2, 0) 70%,
+    rgba(20, 4, 2, 0.35) 100%);
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: .04;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 30% 30%, var(--ink) 1px, transparent 1px),
+    radial-gradient(circle at 70% 70%, var(--ink) 1px, transparent 1px);
+  background-size: 3px 3px, 5px 5px;
+}
+
+/* Foreground frame */
+.hero-frame {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding-top: 92px;
+  /* Round 11/12: bumped from 64px → 104px so the bottom-row pills and
+     the corner stamps at bottom: 22px never share vertical real estate.
+     Round 31: trimmed 104 → 76 now that the hero = 100vh exactly (no
+     min-height floor) — gives the grid a ~28px buffer so the bottom row
+     stays inside the fold on short laptop viewports (~720px) and the title
+     still has room above to breathe. Corner stamps (bottom:22, left side)
+     sit on the opposite horizontal band from the pills, so no overlap. */
+  padding-bottom: 76px;
+}
+.hero-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.hero-row--top {
+  align-items: center;
+}
+.hero-row--bottom {
+  align-items: flex-end;
+}
+
+/* Top: brand + status — now white because the cream scrim doesn't
+   reach the top-right anymore (Round 12). */
+.hero-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ink);
+}
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-family: var(--f-sans);   /* Round 23: consolidated from --f-mono to keep the
+                                  hero page to 3 fonts. */
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(255, 240, 225, 0.92);
+  text-transform: uppercase;
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.7);
+}
+.hero-meta-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-meta .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .55; transform: scale(.85); }
+}
+.hero-meta-sep {
+  margin-right: 8px;
+  color: rgba(255, 240, 225, 0.55);
+}
+
+/* Mid row: title + side blob */
+.hero-row--mid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 60px;
+  align-items: end;
+  padding-bottom: 16px;
+}
+
+.eyebrow.eyebrow--ink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-sans);   /* Round 23: was inheriting --f-mono from global
+                                  .eyebrow. Consolidated to Inter. */
+  color: rgba(255, 240, 225, 0.92);
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.7);
+}
+.eyebrow.eyebrow--ink .dot {
+  width: 7px; height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.hero-title {
+  margin-top: 18px;
+  font-style: normal;
+  font-family: var(--f-sans);     /* Inter — clean modern editorial sans for
+                                     the headline; the high-contrast serif
+                                     accent lives only on the 'Stories.' word
+                                     (below) for a Lithos-style pairing. */
+  font-weight: 600;
+  font-size: var(--t-display);    /* carries the display size/responsive
+                                     clamping that used to live on the
+                                     .display utility (removed so the serif
+                                     font-family on .display can't bleed in
+                                     and overwrite Inter). */
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  color: rgba(255, 245, 232, 0.97);
+  text-shadow: 0 2px 24px rgba(20, 4, 2, 0.55);
+}
+.hero-title em {
+  font-family: var(--f-display);  /* Playfair Display italic — elegant flourish */
+  font-style: italic;
+  font-weight: 600;
+  color: #ffffff;
+}
+.hero-title .title-line:nth-child(3) {
+  color: #ffffff;
+}
+
+.hero-sub {
+  max-width: 480px;
+  margin-top: 26px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(255, 240, 225, 0.86);
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.65);
+}
+
+.hero-cta-row {
+  margin-top: 36px;
+  display: inline-flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Hero buttons — flip to light on dark (cream fill, ink text) so they
+   pop against the dark video. The ghost variant stays outline-only. */
+.hero-cta-row .btn {
+  background: rgba(255, 245, 232, 0.96);
+  color: #1a0606;
+  border-color: rgba(255, 245, 232, 0.96);
+}
+.hero-cta-row .btn:hover {
+  background: #ffffff;
+  color: #1a0606;
+  border-color: #ffffff;
+}
+.hero-cta-row .btn-ghost {
+  background: transparent;
+  color: rgba(255, 245, 232, 0.92);
+  border-color: rgba(255, 245, 232, 0.55);
+  backdrop-filter: blur(6px);
+}
+.hero-cta-row .btn-ghost:hover {
+  background: rgba(255, 245, 232, 0.96);
+  color: #1a0606;
+  border-color: rgba(255, 245, 232, 0.96);
+}
+
+/* Right side: flower only */
+.hero-side {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Right-margin designation strip — moved UP to the top-right area
+   (below the meta, above the mid-row) so it never overlaps the
+   FlowerStage image or the pills row. Hard white with dark halo. */
+.hero-rails {
+  position: absolute;
+  right: var(--gutter);
+  top: 148px;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--f-sans);   /* Round 23: was --f-en-serif (Newsreader), now Inter. */
+  font-style: italic;
+  font-size: 13px;
+  color: #ffffff !important;          /* hard-set: rails always white */
+  letter-spacing: 0.01em;
+  text-align: right;
+  text-shadow: 0 1px 18px rgba(20, 4, 2, 0.7);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Bottom: scroll + tags.
+   Round 12: scroll colour flipped to cream-on-red because the
+   cream scrim no longer covers the bottom-left. */
+.hero-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--f-sans);   /* Round 23: consolidated from --f-mono to keep the
+                                  hero page to 3 fonts. */
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 240, 225, 0.92);
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.7);
+}
+.hero-scroll-line {
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 1px;
+  background: rgba(255, 240, 225, 0.30);
+  overflow: hidden;
+}
+.hero-scroll-line > span {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 240, 225, 0.95);
+  transform: translateX(-100%);
+  animation: scanLine 2.4s ease-in-out infinite;
+}
+@keyframes scanLine {
+  0% { transform: translateX(-100%); }
+  60% { transform: translateX(0); }
+  100% { transform: translateX(110%); }
+}
+
+.hero-tags {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  max-width: 60%;
+}
+/* Pills in the hero — white text, white border, fully transparent fill
+   so the crimson flower shows through. Overrides the global .pill rule. */
+.hero-tags .pill {
+  font-family: var(--f-sans);   /* Round 23: was inheriting --f-mono from global
+                                  .pill. Consolidated to Inter. */
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.50) !important;
+  background: transparent !important;
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.7);
+}
+
+/* Corner stamps — white, inset from the very bottom. */
+.hero-corner {
+  position: absolute;
+  bottom: 22px;
+  font-family: var(--f-sans);   /* Round 23: consolidated from --f-mono to keep the
+                                  hero page to 3 fonts. */
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff !important;          /* hard-set: corners always white */
+  display: flex;
+  gap: 14px;
+  pointer-events: none;
+  z-index: 4;
+  text-shadow: 0 1px 14px rgba(20, 4, 2, 0.75);
+}
+.hero-corner--bl { left: var(--gutter); }
+/* Round 14: .hero-corner--br ("01 / 06 INDEX") removed — it overlapped
+   the pills row and was a stale counter (site now has 11 projects). */
+
+/* Small screens fallback */
+@media (max-width: 1280px) {
+  .hero-row--mid {
+    grid-template-columns: 1fr 240px;
+    gap: 32px;
+  }
+  /* Round 30: removed the old .hero-title font-size override here. It used
+     clamp(56px, 12vw, 120px) which was LARGER than the desktop --t-display
+     and only kicked in at <=1280px, so on those viewports the "shrink" was
+     invisible. The title now follows --t-display everywhere (which already
+     scales with vw), so it shrinks consistently at every width. */
+}
+@media (max-width: 1100px) {
+  .hero-row--mid {
+    grid-template-columns: 1fr;
+  }
+  .hero-side { display: none; }
+  /* On narrow viewports the rails + FlowerStage are hidden, so the
+     chrome sits in the natural bottom-left / bottom-right corners
+     with no competition. */
+  .hero-frame { padding-bottom: 72px; }
+  .hero-corner { bottom: 18px; }
+}

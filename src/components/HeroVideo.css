@@ -1,0 +1,93 @@
+/* HeroVideo — AI clip kept as the hero's visual centre.
+   The clip file itself is never touched; all art direction is in-page.
+   Round 24: user wants the dark crimson / moody-red look back (the
+   reference screenshot has a near-black backdrop with reddish-pink
+   organic tendrils from the tinted video + glowing CursorBloom flowers
+   on top). This sits between Round 17 (too crushed, brightness 0.84)
+   and Round 22 (too natural / 青绿草地) — kept dark and red, but
+   the underlying video content still reads as organic shapes through
+   the wash. */
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #1a0606;     /* deep crimson floor, shows during flash / load */
+}
+
+.hero-video-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 44%;
+  /* Round 24: dark crimson moody.
+     - saturate(1.42) — push reds/flowers into richer tones
+     - contrast(1.13) — keep the petal definition
+     - brightness(0.75) — strong darken for the dark-mood backdrop
+     - hue-rotate(-7deg) — nudge everything toward red/pink
+   */
+  filter: saturate(1.42) contrast(1.13) brightness(0.75) hue-rotate(-7deg);
+  transform: scale(1.1);
+}
+
+/* Crimson multiply wash — full-frame, strong enough to push the clip
+   into the dark red mood. Top + bottom darker, middle slightly less
+   so the centre stays readable behind the title + CursorMask reveal. */
+.hero-video-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(120, 16, 10, 0.6) 0%,
+    rgba(120, 18, 10, 0.52) 50%,
+    rgba(50, 8, 4, 0.72) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* Cinematic grade — soft radial vignette + top/bottom darken.
+   Round 24: deepened the vignette so the title area reads cleanly
+   even with the darker underlying clip. */
+.hero-video-grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 82% at 50% 48%,
+      rgba(0, 0, 0, 0) 62%,
+      rgba(40, 10, 6, 0.42) 100%),
+    linear-gradient(180deg,
+      rgba(60, 10, 6, 0.5) 0%,
+      rgba(60, 10, 6, 0) 22%,
+      rgba(60, 10, 6, 0.6) 100%);
+}
+
+/* Centre "pop" — a soft warm screen-blend lift over the flower centre so
+   the visual centre feels more alive / vivid. Sits under the CursorBloom
+   canvas (z-2) and over the base video. */
+.hero-video-pop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse 52% 46% at 50% 45%,
+      rgba(255, 150, 120, 0.22) 0%,
+      rgba(255, 120, 90, 0.10) 45%,
+      rgba(255, 120, 90, 0) 100%);
+}
+
+.hero-video-ripple {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* events handled on window; never block the text */
+  z-index: 4;            /* above the CursorBloom canvas (z-2) */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video-el { animation: none; }
+}

@@ -1,0 +1,37 @@
+.marquee-section {
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  padding: 22px 0;
+}
+.marquee-track {
+  display: flex;
+  gap: 56px;
+  white-space: nowrap;
+  animation: marqueeScroll 38s linear infinite;
+  font-family: var(--f-en-serif);
+  font-style: italic;
+  font-size: clamp(28px, 3.4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  will-change: transform;
+}
+.marquee-item {
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  font-feature-settings: 'liga', 'dlig';
+}
+.marquee-item.is-mark {
+  color: var(--accent);
+  font-style: normal;
+  font-family: var(--f-sans);
+  font-size: 0.6em;
+  line-height: 1;
+  padding: 0 4px;
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

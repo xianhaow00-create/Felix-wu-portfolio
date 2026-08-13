@@ -1,0 +1,69 @@
+.logo-mark {
+  display: inline-block;
+  color: var(--ink);
+  transition: color .25s var(--ease), transform .35s var(--ease-out);
+}
+.logo-mark path {
+  fill: currentColor;
+}
+.logo-tone-paper path { fill: var(--ink); }
+.logo-tone-paper circle { fill: var(--accent); }
+
+.logo-mark:hover {
+  transform: rotate(-6deg);
+}
+
+/* Photo-based brand mark — circular portrait with red dot accent */
+.photo-mark {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-deep);
+  box-shadow: 0 0 0 1px var(--line);
+  isolation: isolate;
+  transition: transform .4s var(--ease-out);
+}
+.photo-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: saturate(.92) contrast(1.02);
+}
+.photo-mark-dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--bg);
+}
+.photo-mark:hover {
+  transform: rotate(-4deg);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--f-sans);   /* Round 23: was --f-en-serif (Newsreader). Consolidated
+                                  to keep the hero page to 3 fonts (Inter + Playfair
+                                  Display + Noto Serif SC). The nav brand now rides
+                                  on Inter so it matches the rest of the nav. */
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+.wordmark-en {
+  font-weight: 500;
+}
+.wordmark-cn {
+  font-family: var(--f-cn-serif);
+  font-size: 13px;
+  color: var(--ink-4);
+  letter-spacing: 0.05em;
+}

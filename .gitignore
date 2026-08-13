@@ -1,0 +1,28 @@
+# Node / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output — Netlify builds from source (`npm run build` → dist),
+# so dist is generated at deploy time and MUST NOT be committed.
+dist/
+dist-ssr/
+*.local
+
+# Env / secrets (if any are added later)
+.env
+.env.local
+.env.*.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
