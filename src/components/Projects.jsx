@@ -1,10 +1,37 @@
 // Projects — bento grid with alternating image/title alignment (Main.png style).
 // Every project uses the same row layout — designed covers were folded into the
 // shared pattern so the grid reads as one editorial flow.
+//
+// Round 35: clicking a card no longer navigates away to the raw PDF. It opens an
+// in-page lightbox that embeds the PDF via <iframe>, so visitors read the full
+// case study on the site (no download, no tab jump). The raw PDF is still one
+// click away ("新标签打开") for saving/archiving.
+import { useState, useEffect } from 'react';
 import { site } from '../data/site.js';
 import './Projects.css';
 
 export function Projects() {
+  const [active, setActive] = useState(null); // { pdf, title, titleCn, category }
+
+  const openPdf = (p) =>
+    setActive({ pdf: p.pdf, title: p.title, titleCn: p.titleCn, category: p.category });
+  const closePdf = () => setActive(null);
+
+  // Esc to close + lock page scroll while the lightbox is open.
+  useEffect(() => {
+    if (!active) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') closePdf();
+    };
+    document.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [active]);
+
   return (
     <section id="work" className="section projects">
       <div className="wrap">
@@ -19,7 +46,7 @@ export function Projects() {
           </div>
           <p className="projects-intro">
             A curated selection across brand identity, packaging, IP, editorial, and motion.
-            Each project links to the full case (PDF) or original artwork.
+            Click any project to read the full case study inline.
           </p>
         </header>
 
@@ -30,8 +57,10 @@ export function Projects() {
               <a
                 key={p.id}
                 href={p.pdf}
-                target="_blank"
-                rel="noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openPdf(p);
+                }}
                 className={`project-card card--${p.size || 'sm'} reveal`}
                 data-delay={(i % 4) + 1}
                 data-cursor="hover"
@@ -54,7 +83,7 @@ export function Projects() {
                     <div className="project-meta-foot">
                       <span className="project-type">{p.type}</span>
                       <span className="project-link">
-                        Open case <span className="arrow">↗</span>
+                        View case <span className="arrow">↗</span>
                       </span>
                     </div>
                   </div>
@@ -74,8 +103,10 @@ export function Projects() {
             </span>
             <a
               href="/projects/about.pdf"
-              target="_blank"
-              rel="noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                openPdf({ pdf: '/projects/about.pdf', title: 'Read full CV', titleCn: '简历 / CV', category: 'CV' });
+              }}
               className="btn btn-ghost"
               data-cursor="hover"
             >
@@ -85,6 +116,33 @@ export function Projects() {
           </div>
         </div>
       </div>
+
+      {/* ── In-page PDF lightbox ─────────────────────────────────────── */}
+      {active && (
+        <div
+          className="pdf-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.titleCn || active.title}
+          onClick={closePdf}
+        >
+          <div className="pdf-lightbox-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="pdf-lightbox-bar">
+              <div className="pdf-lightbox-info">
+                <span className="pdf-lightbox-cat">{active.category}</span>
+                <span className="pdf-lightbox-title">{active.titleCn || active.title}</span>
+              </div>
+              <div className="pdf-lightbox-actions">
+                <a className="pdf-lightbox-ext" href={active.pdf} target="_blank" rel="noreferrer">
+                  新标签打开 ↗
+                </a>
+                <button className="pdf-lightbox-close" onClick={closePdf} aria-label="关闭">×</button>
+              </div>
+            </div>
+            <iframe className="pdf-lightbox-frame" src={active.pdf} title={active.titleCn || active.title} />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
