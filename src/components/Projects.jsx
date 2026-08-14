@@ -158,7 +158,13 @@ export function Projects() {
                 return src.endsWith('.pdf') ? (
                   <iframe className="pdf-lightbox-frame" src={src} title={active.titleCn || active.title} />
                 ) : (
-                  <img className="pdf-lightbox-img" src={src} alt={active.titleCn || active.title} />
+                  /* Round 48: wrap single image in a scrollable container
+                     so tall portraits fill the full panel width (instead
+                     of being squished narrow by object-fit:contain). The
+                     visitor scrolls vertically to read the whole image. */
+                  <div className="pdf-lightbox-scroll">
+                    <img className="pdf-lightbox-img" src={src} alt={active.titleCn || active.title} />
+                  </div>
                 );
               }
               return (

@@ -374,8 +374,11 @@
 @keyframes lightboxIn { from { opacity: 0; } to { opacity: 1; } }
 
 .pdf-lightbox-panel {
-  width: min(1280px, 100%);
-  height: min(90vh, 1000px);
+  /* Round 48: widen to use more of the viewport on desktop
+     (was 1280px — felt narrow on 1440+ screens). 1600 / 96vw
+     lets the gallery breathe like the shu uemura reference. */
+  width: min(1600px, 96vw);
+  height: min(92vh, 1000px);
   display: flex;
   flex-direction: column;
   background: var(--bg);
@@ -465,20 +468,36 @@
   min-height: 0;
 }
 
-/* Inline image (PNG/JPG/WebP) — displayed directly, no download.
-   R38: let it fill the panel height without forcing a scroll — the
-   object-fit: contain keeps the aspect ratio intact. */
-.pdf-lightbox-img {
+/* Inline image (PNG/JPG/WebP) — Round 48: now wrapped in
+   .pdf-lightbox-scroll (a vertically scrollable container). The image
+   renders at its NATURAL width filling the full panel, so tall
+   portraits use the whole viewport width instead of being squished
+   narrow by object-fit:contain. Visitors scroll vertically to read
+   the full image. */
+.pdf-lightbox-scroll {
   flex: 1;
-  width: 100%;
   min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.pdf-lightbox-img {
+  width: 100%;
+  height: auto;
+  display: block;
   object-fit: contain;
   background: #fff;
 }
 
 /* Multi-image gallery (e.g. Shu Uemura 9 pages) — 2-column grid that
    uses the panel's full width. Visitors see two pages at a glance and
-   scroll vertically to progress; no need to zoom. */
+   scroll vertically to progress; no need to zoom.
+   Round 48: bumped gap 18→20, padding 22→24, and gallery-img
+   max-height 82vh→85vh so the shu uemura-style 2x2 grid fills more
+   of the widened 1600px panel. */
 .pdf-lightbox-gallery {
   flex: 1;
   min-height: 0;
@@ -486,15 +505,15 @@
   background: #fff;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  padding: 22px;
+  gap: 20px;
+  padding: 24px;
   align-items: start;
-  justify-items: center;
+  justify-items: stretch;
 }
 .pdf-lightbox-gallery-img {
   width: 100%;
   height: auto;
-  max-height: 82vh;
+  max-height: 85vh;
   object-fit: contain;
   display: block;
   border-radius: 4px;
