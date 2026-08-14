@@ -67,7 +67,8 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
     ],
   },
 
-  // Curated for the portfolio. Each card links to the original PDF in /projects/ .
+  // Curated for the portfolio. Each card opens the full work (image or PDF) in
+  // an in-page lightbox. `work` points to the full asset; `cover` is the card thumb.
   projects: [
     {
       id: 'weaving',
@@ -77,7 +78,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Brand · IP · Packaging',
       year: '2025',
       cover: '/works/cover-weaving.webp',
-      pdf: '/works/weaving-master.webp',
+      work: '/works/weaving-master.webp',
       desc:
         'A full identity system for a sweater brand — logotype, packaging, IP mascots, and spatial applications.',
       size: 'lg',     // large card
@@ -90,7 +91,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Brand · E-commerce',
       year: '2026',
       cover: '/works/cover-shuuemura.webp',
-      pdf: '/projects/shu-uemura.pdf',
+      work: '/projects/shu-uemura.pdf',
       desc:
         'Shu Uemura CN e-commerce visual — detail pages, mega-promo banners, and brand-consistent visuals at scale.',
       size: 'md',
@@ -103,7 +104,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Brand · Spatial',
       year: '2026',
       cover: '/works/cover-yze.webp',
-      pdf: '/projects/project-2.pdf',
+      work: '/works/work-yze.webp',
       desc:
         'A cultural brand for the junction point of Jiangsu, Zhejiang and Anhui — region, river, and craft.',
       size: 'md',
@@ -116,7 +117,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Brand · Packaging',
       year: '2026',
       cover: '/works/cover-yingge.webp',
-      pdf: '/projects/project-3.pdf',
+      work: '/works/work-yingge.webp',
       desc:
         'Translating Chaozhou intangible cultural heritage into a modern tea-drinker’s universe.',
       size: 'md',
@@ -129,7 +130,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'IP · Illustration',
       year: '2025',
       cover: '/works/cover-pickleball.webp',
-      pdf: '/projects/m-pickleball.pdf',
+      work: '/works/work-pickleball.webp',
       desc:
         'IP & visual system for a community-level pickleball brand — posters, urban walls, and digital.',
       size: 'md',
@@ -142,7 +143,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'IP · Brand',
       year: '2025',
       cover: '/works/cover-dinosaur.webp',
-      pdf: '/projects/changzhou-dinosaur.pdf',
+      work: '/works/work-dinosaur.webp',
       desc:
         'A pink, bubble-loving stegosaurus becomes the face of a theme park — design rationale to applications.',
       size: 'lg',
@@ -155,7 +156,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Design',
       year: '2025',
       cover: '/works/thumbs/project-4-2.webp',
-      pdf: '/projects/project-4.pdf',
+      work: '/works/work-ecom.webp',
       desc:
         'Detail pages, structural design, and motion-led product storytelling — making objects feel inevitable.',
       size: 'sm',
@@ -168,7 +169,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Artwork',
       year: '2024',
       cover: '/works/thumbs/project-5-2.webp',
-      pdf: '/projects/project-5.pdf',
+      work: '/works/work-graphic.webp',
       desc:
         'Posters, magazine spreads, type experiments — chasing rhythm, hierarchy, and quiet surprises.',
       size: 'sm',
@@ -181,7 +182,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Design',
       year: '2025',
       cover: '/works/thumbs/project-6-2.webp',
-      pdf: '/projects/project-6.pdf',
+      work: '/works/work-magazine.webp',
       desc:
         'Editorial systems, page rhythm, and image-led storytelling — the slow craft of reading on paper.',
       size: 'sm',
@@ -194,7 +195,7 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Design',
       year: '2025',
       cover: '/works/cover-display.webp',
-      pdf: '/projects/project-7.pdf',
+      work: '/works/work-display.webp',
       desc:
         'How a brand behaves when it stands in a room — fixtures, retail rhythm, and the gesture of entry.',
       size: 'md',
@@ -207,10 +208,23 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Artwork',
       year: '2024',
       cover: '/works/thumbs/project-8-2.webp',
-      pdf: '/projects/project-8.pdf',
+      work: '/works/work-photo.webp',
       desc:
         'A camera as a way of paying attention — light, motion, time, and the small frames of ordinary days.',
       size: 'sm',
+    },
+    {
+      id: 'competition',
+      title: 'Competition Work',
+      titleCn: '比赛',
+      category: 'Competition',
+      type: 'Design',
+      year: '2026',
+      cover: '/works/cover-competition.webp',
+      work: '/works/work-competition.webp',
+      desc:
+        'Award-entry design work — a selected competition project (展板).',
+      size: 'lg',
     },
   ],
 

@@ -2,19 +2,18 @@
 // Every project uses the same row layout — designed covers were folded into the
 // shared pattern so the grid reads as one editorial flow.
 //
-// Round 35: clicking a card no longer navigates away to the raw PDF. It opens an
-// in-page lightbox that embeds the PDF via <iframe>, so visitors read the full
-// case study on the site (no download, no tab jump). The raw PDF is still one
-// click away ("新标签打开") for saving/archiving.
+// Round 35/36: clicking a card opens an in-page lightbox. Images render inline
+// via <img> (no download); PDFs (e.g. Shu Uemura) embed via <iframe>. The raw
+// file is one click away ("新标签打开") for saving/archiving.
 import { useState, useEffect } from 'react';
 import { site } from '../data/site.js';
 import './Projects.css';
 
 export function Projects() {
-  const [active, setActive] = useState(null); // { pdf, title, titleCn, category }
+  const [active, setActive] = useState(null); // { work, title, titleCn, category }
 
-  const openPdf = (p) =>
-    setActive({ pdf: p.pdf, title: p.title, titleCn: p.titleCn, category: p.category });
+  const openWork = (p) =>
+    setActive({ work: p.work, title: p.title, titleCn: p.titleCn, category: p.category });
   const closePdf = () => setActive(null);
 
   // Esc to close + lock page scroll while the lightbox is open.
@@ -56,10 +55,10 @@ export function Projects() {
             return (
               <a
                 key={p.id}
-                href={p.pdf}
+                href={p.work}
                 onClick={(e) => {
                   e.preventDefault();
-                  openPdf(p);
+                  openWork(p);
                 }}
                 className={`project-card card--${p.size || 'sm'} reveal`}
                 data-delay={(i % 4) + 1}
@@ -94,7 +93,7 @@ export function Projects() {
         </div>
 
         <div className="projects-foot reveal">
-          <span className="eyebrow"><span className="dot" /> 11 selected · 04 still in progress</span>
+          <span className="eyebrow"><span className="dot" /> 12 selected · 04 still in progress</span>
           <div className="cv-foot-cta">
             {/* Glass "Look here" pointer — draws the eye to the CV button */}
             <span className="cv-pointer" aria-hidden>
@@ -102,10 +101,10 @@ export function Projects() {
               <span className="cv-pointer-arrow" />
             </span>
             <a
-              href="/projects/about.pdf"
+              href="/works/work-about.webp"
               onClick={(e) => {
                 e.preventDefault();
-                openPdf({ pdf: '/projects/about.pdf', title: 'Read full CV', titleCn: '简历 / CV', category: 'CV' });
+                openWork({ work: '/works/work-about.webp', title: 'Read full CV', titleCn: '简历 / CV', category: 'CV' });
               }}
               className="btn btn-ghost"
               data-cursor="hover"
@@ -133,13 +132,17 @@ export function Projects() {
                 <span className="pdf-lightbox-title">{active.titleCn || active.title}</span>
               </div>
               <div className="pdf-lightbox-actions">
-                <a className="pdf-lightbox-ext" href={active.pdf} target="_blank" rel="noreferrer">
+                <a className="pdf-lightbox-ext" href={active.work} target="_blank" rel="noreferrer">
                   新标签打开 ↗
                 </a>
                 <button className="pdf-lightbox-close" onClick={closePdf} aria-label="关闭">×</button>
               </div>
             </div>
-            <iframe className="pdf-lightbox-frame" src={active.pdf} title={active.titleCn || active.title} />
+            {active.work.endsWith('.pdf') ? (
+              <iframe className="pdf-lightbox-frame" src={active.work} title={active.titleCn || active.title} />
+            ) : (
+              <img className="pdf-lightbox-img" src={active.work} alt={active.titleCn || active.title} />
+            )}
           </div>
         </div>
       )}

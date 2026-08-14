@@ -411,6 +411,15 @@
   min-height: 0;
 }
 
+/* Inline image (PNG/JPG/WebP) — displayed directly, no download */
+.pdf-lightbox-img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+  background: #fff;
+}
+
 /* Full-bleed on small screens */
 @media (max-width: 700px) {
   .pdf-lightbox { padding: 0; }
