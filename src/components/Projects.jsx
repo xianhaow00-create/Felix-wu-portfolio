@@ -138,11 +138,28 @@ export function Projects() {
                 <button className="pdf-lightbox-close" onClick={closePdf} aria-label="关闭">×</button>
               </div>
             </div>
-            {active.work.endsWith('.pdf') ? (
-              <iframe className="pdf-lightbox-frame" src={active.work} title={active.titleCn || active.title} />
-            ) : (
-              <img className="pdf-lightbox-img" src={active.work} alt={active.titleCn || active.title} />
-            )}
+            {(() => {
+              const items = Array.isArray(active.work) ? active.work : [active.work];
+              if (items.length === 1) {
+                const src = items[0];
+                return src.endsWith('.pdf') ? (
+                  <iframe className="pdf-lightbox-frame" src={src} title={active.titleCn || active.title} />
+                ) : (
+                  <img className="pdf-lightbox-img" src={src} alt={active.titleCn || active.title} />
+                );
+              }
+              return (
+                <div className="pdf-lightbox-gallery">
+                  {items.map((src, i) =>
+                    src.endsWith('.pdf') ? (
+                      <iframe key={i} className="pdf-lightbox-gallery-frame" src={src} title={`${active.titleCn || active.title} ${i + 1}`} />
+                    ) : (
+                      <img key={i} className="pdf-lightbox-gallery-img" src={src} alt={`${active.titleCn || active.title} ${i + 1}`} />
+                    )
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}

@@ -91,7 +91,17 @@ I’m happiest when I’m making things: brand identities, packaging systems, IP
       type: 'Brand · E-commerce',
       year: '2026',
       cover: '/works/cover-shuuemura.webp',
-      work: '/projects/shu-uemura.pdf',
+      work: [
+        '/works/work-shuuemura-1.webp',
+        '/works/work-shuuemura-2.webp',
+        '/works/work-shuuemura-3.webp',
+        '/works/work-shuuemura-4.webp',
+        '/works/work-shuuemura-5.webp',
+        '/works/work-shuuemura-6.webp',
+        '/works/work-shuuemura-7.webp',
+        '/works/work-shuuemura-8.webp',
+        '/works/work-shuuemura-9.webp',
+      ],
       desc:
         'Shu Uemura CN e-commerce visual — detail pages, mega-promo banners, and brand-consistent visuals at scale.',
       size: 'md',
