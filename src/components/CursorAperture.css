@@ -1,0 +1,90 @@
+/* CursorAperture — Round 43 "soft light round aperture" reveal.
+
+   Round 41/42 problem: with mask-size: 232px 232px + mask-repeat:
+   no-repeat, the area OUTSIDE the 232 px mask box was treated by
+   the browser as "no mask applied" → the entire video overlay was
+   visible as a big rectangle (image 2 from the user). The 232 px
+   circle was the only part that was supposed to be visible, but
+   everything outside it leaked through.
+
+   Round 43 fix: the mask now covers the FULL element (mask-size:
+   100% 100%) with the radial-gradient circle defined INSIDE the
+   mask via CSS variables (--mx, --my). The gradient is `circle
+   116px at var(--mx) var(--my)` — a fixed-radius 232 px-diameter
+   circle at the cursor position. Inside the circle the alpha
+   transitions per the user's spec stops; outside the circle the
+   alpha is 0 so the overlay is invisible. No more rectangle leak.
+
+   Visibility:
+     - opacity 0 by default; fades in via .has-cursor only while
+       the cursor is over the hero (CursorAperture.jsx).
+     - sits between the dim base clip + tint + grade + centre pop
+       and the red-fluid CursorBloom canvas (z-3). */
+
+.hero-cursor-aperture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+
+  /* Default cursor-relative position — used before the user has moved
+     the mouse. JS overrides --mx / --my on every mousemove. */
+  --mx: 50%;
+  --my: 44%;
+
+  /* Full-size mask with the radial-gradient circle defined INSIDE.
+     Outside the circle the gradient's last stop is transparent
+     (rgba(0,0,0,0)) so the area outside the 232 px aperture is
+     invisible — no more "rectangle leak". */
+  -webkit-mask-image: radial-gradient(
+    circle 116px at var(--mx) var(--my),
+    rgba(0, 0, 0, 1)    0%,
+    rgba(0, 0, 0, 1)    40%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.4)  75%,
+    rgba(0, 0, 0, 0.12) 88%,
+    rgba(0, 0, 0, 0)    100%);
+          mask-image: radial-gradient(
+    circle 116px at var(--mx) var(--my),
+    rgba(0, 0, 0, 1)    0%,
+    rgba(0, 0, 0, 1)    40%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.4)  75%,
+    rgba(0, 0, 0, 0.12) 88%,
+    rgba(0, 0, 0, 0)    100%);
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+
+  /* Hidden by default — only fades in while the cursor is over the
+     hero. JS toggles the .has-cursor class. */
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+}
+.hero-cursor-aperture.has-cursor {
+  opacity: 1;
+}
+
+.hero-cursor-aperture-vid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 44%;
+  transform: scale(1.1);   /* match the base clip's crop so the reveal
+                              aligns pixel-for-pixel with the underlying
+                              frame as the mask slides around. */
+  /* Vivid copy — brighter and warmer than the dim base, no
+     mix-blend-mode. */
+  filter: brightness(1.42) saturate(1.55) contrast(1.05) hue-rotate(-5deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Reduced-motion users get neither the auto-tracking nor the
+     reveal — the overlay stays hidden. */
+  .hero-cursor-aperture { display: none; }
+}

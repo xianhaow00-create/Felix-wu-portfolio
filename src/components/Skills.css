@@ -20,6 +20,25 @@
   line-height: 1.6;
 }
 
+/* Round 41: the CN manifesto moved here from About. Same italic
+   Noto Serif SC decorative typography that used to live as
+   .about-deco-cn — the design itself is unchanged per the user's
+   request — just relocated to read as a quiet manifesto between
+   the Skills title and the capability grid. */
+.skills-deco-cn {
+  font-family: var(--f-cn-serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 2.2;
+  letter-spacing: 0.12em;
+  color: var(--ink-4);
+  max-width: 34ch;
+  margin: 0 0 56px;          /* sits cleanly below the head, before
+                                the capability grid; less aggressive
+                                spacing than the About variant. */
+  padding-left: 2px;
+}
+
 .skill-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

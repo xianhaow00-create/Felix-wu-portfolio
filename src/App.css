@@ -5,26 +5,35 @@
   overflow-x: clip;
 }
 
-/* Custom cursor (desktop only) */
+/* Custom cursor (desktop only).
+   Round 41: switched the soft gradient circle from ink (dark) to BRAND
+   RED so the cursor that reads on every page matches the hero's red
+   fluid dispersion + red CursorAperture reveal (visual unity across
+   the whole site). Still a soft radial fade — semi-transparent red
+   core, fully transparent at the edge — no hard outline, no
+   mix-blend-mode difference. Size 34 px resting, grows to 64 px on
+   hover. */
 .cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 18px;
-  height: 18px;
-  border: 1.5px solid var(--ink);
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   pointer-events: none;
-  mix-blend-mode: difference;
+  background: radial-gradient(circle,
+    rgba(255, 80, 70, 0.55) 0%,
+    rgba(255, 70, 55, 0.32) 38%,
+    rgba(255, 70, 55, 0.10) 70%,
+    rgba(255, 70, 55, 0) 100%);
   z-index: 9999;
   transform: translate3d(-50%, -50%, 0);
-  transition: width .25s var(--ease), height .25s var(--ease), opacity .25s var(--ease);
+  transition: width .28s var(--ease), height .28s var(--ease), opacity .25s var(--ease);
   will-change: transform;
 }
 .cursor.hover {
-  width: 56px;
-  height: 56px;
-  background: var(--ink);
+  width: 64px;
+  height: 64px;
 }
 @media (max-width: 1100px), (pointer: coarse) {
   .cursor { display: none; }

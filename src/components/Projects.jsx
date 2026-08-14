@@ -2,9 +2,18 @@
 // Every project uses the same row layout — designed covers were folded into the
 // shared pattern so the grid reads as one editorial flow.
 //
+// Round 38: hover logic redesigned.
+//   • Default state: the cover image is HIDDEN. The card shows a large
+//     italic-serif title centered on a cream field — like a quiet poster
+//     that whispers the project's name (no image, no clutter).
+//   • Hover state: the cover image fades in (over ~0.5s) and gently
+//     scales from 1.08 → 1.04 (the "photo zoom" effect is preserved).
+//   • The bottom meta (cat tag · title · cn · desc · View case) is always
+//     visible — it's the editorial label, not the cover.
+//
 // Round 35/36: clicking a card opens an in-page lightbox. Images render inline
-// via <img> (no download); PDFs (e.g. Shu Uemura) embed via <iframe>. The raw
-// file is one click away ("新标签打开") for saving/archiving.
+// via <img> (no download); PDFs embed via <iframe>. The raw file is one click
+// away ("新标签打开") for saving/archiving.
 import { useState, useEffect } from 'react';
 import { site } from '../data/site.js';
 import './Projects.css';
@@ -52,6 +61,9 @@ export function Projects() {
         <div className="projects-grid">
           {site.projects.map((p, i) => {
             const flip = i % 2 === 1;
+            // First word of the English title (or CN if EN is short).
+            // Used as the centered name on the default "poster" card.
+            const coverName = p.title.split(' ')[0] || p.titleCn;
             return (
               <a
                 key={p.id}
@@ -66,6 +78,7 @@ export function Projects() {
               >
                 <div className={`project-row ${flip ? 'is-flipped' : ''}`}>
                   <div className="project-cover">
+                    <span className="cover-name" aria-hidden>{coverName}</span>
                     <img src={p.cover} alt={`${p.title} — preview`} loading="lazy" />
                     <div className="project-corner-mark" aria-hidden>↗</div>
                   </div>

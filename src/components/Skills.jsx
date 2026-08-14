@@ -20,6 +20,16 @@ export function Skills() {
           </p>
         </header>
 
+        {/* Round 41/42: the CN manifesto moved here from About — but
+            only the FIRST line ("水是血脉…"). The second line
+            ("设计是剥离多余…") stayed in About. Same italic Noto
+            Serif SC decorative block — small, muted, airy — so the
+            motto sits as a quiet manifesto between the title and the
+            capability grid. */}
+        <p className="skills-deco-cn serif-cn reveal">
+          水是血脉，文是灵魂，速度是翅膀。
+        </p>
+
         <div className="skill-grid">
           {site.skills.map((s, i) => (
             <article

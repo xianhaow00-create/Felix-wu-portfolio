@@ -1,0 +1,76 @@
+/* EditorialMarquee — Round 39.
+   User asked to shrink the strip AND invert it to black bg / white text
+   / red dots so it reads as a visual effect like the reference. Content
+   gains one more bilingual pair ("淬炼 · Poised") so the loop breathes.
+   Cream bg removed; now sits on #000 with white serif italic EN, white
+   Noto Serif SC CN, and the brand-red dot separators. */
+
+.editorial-marquee {
+  background: #000;
+  overflow: hidden;
+  /* Round 40: trimmed padding 38→22 / 42→24 so the strip reads as a
+     thin subtle decoration rather than a feature band. */
+  padding: 22px 0 24px;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.editorial-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  white-space: nowrap;
+  animation: emScroll 56s linear infinite;
+  will-change: transform;
+  font-family: var(--f-en-serif);
+  font-style: italic;
+  /* Round 40: font-size 36–84 → 24–54 so the strip is a quiet
+     decorative beat, not a competing headline. */
+  font-size: clamp(24px, 3.6vw, 54px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.editorial-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.em-item {
+  display: inline-flex;
+  align-items: center;
+}
+.em-en {
+  color: #fff;
+}
+.em-cn {
+  font-family: var(--f-cn-serif);
+  font-style: normal;
+  font-size: 0.74em;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin: 0 6px;
+}
+.em-mark {
+  font-family: var(--f-sans);
+  font-style: normal;
+  font-size: 0.42em;
+  line-height: 1;
+  color: var(--accent);
+  padding: 0 6px;
+  align-self: center;
+  transform: translateY(-0.2em);
+}
+
+@keyframes emScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (max-width: 1100px) {
+  .editorial-marquee { padding: 18px 0 20px; }
+  .editorial-marquee-track { font-size: clamp(20px, 5.4vw, 44px); }
+}
+@media (max-width: 700px) {
+  .editorial-marquee { padding: 16px 0 18px; }
+  .editorial-marquee-track { gap: 20px; font-size: clamp(18px, 6.2vw, 34px); }
+}

@@ -51,8 +51,18 @@
   z-index: 1;
   height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding-top: 92px;
+  /* Round 47: removed the first auto row (hero-row--top) since
+     hero-meta now lives inside hero-text, not as a corner stamp.
+     Grid is now just mid + bottom. */
+  grid-template-rows: 1fr auto;
+  /* Round 38: bumped 92 → 120px so the top-right status row ("Available
+     for hire / Based in Guangzhou") clears the floating nav pill (which
+     sits at top:22px and is ~56px tall, bottom ≈ 78px). The extra ~42px
+     buffer means the nav never overlaps or touches the status text.
+     Round 47: hero-meta is no longer the corner stamp — it now lives
+     inside hero-text (well below the nav band) — but padding-top is
+     kept so the eyebrow/title still get the breathing room. */
+  padding-top: 120px;
   /* Round 11/12: bumped from 64px → 104px so the bottom-row pills and
      the corner stamps at bottom: 22px never share vertical real estate.
      Round 31: trimmed 104 → 76 now that the hero = 100vh exactly (no
@@ -85,15 +95,23 @@
 .hero-meta {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 4px;
   font-family: var(--f-sans);   /* Round 23: consolidated from --f-mono to keep the
                                   hero page to 3 fonts. */
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  /* Round 44: shrunk the status text from 11px → 9px and slightly
+     opened letter-spacing (0.12em → 0.16em) so it reads as a quiet
+     corner stamp rather than competing with the hero title. */
+  font-size: 9px;
+  letter-spacing: 0.16em;
   color: rgba(255, 240, 225, 0.92);
   text-transform: uppercase;
   text-shadow: 0 1px 14px rgba(20, 4, 2, 0.7);
+  /* Round 47: hero-meta is no longer a top-left corner stamp. It now
+     sits inside hero-text as a quiet status caption above the eyebrow,
+     so the absolute positioning is removed. margin-bottom gives it
+     breathing room from the "● HELLO! I'M FELIX WU." eyebrow below. */
+  margin: 0 0 18px;
 }
 .hero-meta-line {
   display: inline-flex;
@@ -149,12 +167,11 @@
                                      accent lives only on the 'Stories.' word
                                      (below) for a Lithos-style pairing. */
   font-weight: 600;
-  font-size: var(--t-display);    /* carries the display size/responsive
-                                     clamping that used to live on the
-                                     .display utility (removed so the serif
-                                     font-family on .display can't bleed in
-                                     and overwrite Inter). */
-  letter-spacing: -0.03em;
+  /* Round 40: bumped again 44–104 → 52–120, per user "主体文字稍微再
+     大一点". Slightly tighter letter-spacing to compensate for the
+     larger size so the headline still reads as a cohesive block. */
+  font-size: clamp(52px, 6.4vw, 120px);
+  letter-spacing: -0.035em;
   line-height: 0.98;
   color: rgba(255, 245, 232, 0.97);
   text-shadow: 0 2px 24px rgba(20, 4, 2, 0.55);

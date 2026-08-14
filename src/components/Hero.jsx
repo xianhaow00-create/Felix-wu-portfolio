@@ -23,17 +23,22 @@ export function Hero() {
 
       {/* Foreground frame */}
       <div className="wrap hero-frame">
-        <div className="hero-row hero-row--top">
-          {/* Top-left intentionally empty — brand mark is in the floating Navigation */}
-
-          <div className="hero-meta">
-            <span className="hero-meta-line"><span className="dot" /> Available for hire · 2026</span>
-            <span className="hero-meta-line"><span className="hero-meta-sep">|</span> Based in Guangzhou</span>
-          </div>
-        </div>
-
         <div className="hero-row hero-row--mid">
           <div className="hero-text">
+            {/* Round 47: hero-meta moved OUT of the top-left corner stamp
+               slot (where the wider Round 46 nav kept overlapping it
+               horizontally — nav is 86vw, meta is ~172px wide, both
+               starting near left:47px so they collided on the same band
+               and the cream-on-cream text washed out). It now sits
+               inside the hero-text column as a quiet status caption
+               above the eyebrow — guaranteed nav-free because it's
+               deep inside the content flow at y > 120 (well below the
+               nav's y=22-84 band). */}
+            <div className="hero-meta">
+              <span className="hero-meta-line"><span className="dot" /> Available for hire · 2026</span>
+              <span className="hero-meta-line"><span className="hero-meta-sep">|</span> Based in Guangzhou</span>
+            </div>
+
             <span className="eyebrow eyebrow--ink reveal" data-delay="1">
               <span className="dot" /> {site.hero.kicker}
             </span>

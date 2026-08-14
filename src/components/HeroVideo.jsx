@@ -10,7 +10,7 @@
 // Plus a mouse-interactive water-ripple overlay. The clip file itself is
 // left untouched; all art direction is in-page.
 import { useEffect, useRef } from 'react';
-import { CursorMask } from './CursorMask.jsx';
+import { CursorAperture } from './CursorAperture.jsx';
 import { CursorBloom } from './CursorBloom.jsx';
 import './HeroVideo.css';
 
@@ -153,11 +153,19 @@ export function HeroVideo() {
       <div className="hero-video-grade" aria-hidden />
       {/* warm centre "pop" — lifts the flower centre for a more vivid read */}
       <div className="hero-video-pop" aria-hidden />
-      {/* CursorMask — reveals a brighter "second image" of the clip through a
-          soft circular hole that follows the cursor (true Lithos mechanic,
-          refined: smaller / softer / layered hole). */}
-      <CursorMask />
-      {/* CursorBloom — flowers + sparkles bloom along the cursor's path
+      {/* CursorMask removed in Round 40 — the user asked to drop the
+          irregular (Lithos ink-mask) follow style in favour of a clean
+          soft gradient circle cursor + red fluid dispersion. */}
+      {/* Round 41: CursorAperture replaces the previous flat reveal
+          with a LAYERED "soft light round aperture" — a brighter
+          second copy of the clip is masked by a radial gradient
+          (per spec: 0→1, 0.4→1, 0.6→0.75, 0.75→0.4, 0.88→0.12,
+          1→0, 232 px outer halo + a tighter 110 px inner core for
+          depth). The hole follows the cursor; defaults to the hero
+          visual centre so the centre of the screen is always a bit
+          brighter. */}
+      <CursorAperture />
+      {/* CursorBloom — red fluid dispersion along the cursor's path
           (initially empty canvas, screen-blended for a luminous glow). */}
       <CursorBloom />
       <RippleOverlay />

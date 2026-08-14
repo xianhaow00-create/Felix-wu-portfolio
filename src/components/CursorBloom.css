@@ -1,9 +1,9 @@
 /* CursorBloom — the flower-trail canvas.
    Starts empty; flowers spawn at the eased cursor and glow as it moves.
 
-   - z-index: 2 → above the dim base video + tint + grade + centre pop,
-     but below the ripple overlay (z-4) and BloomText (z-3) so the value
-     phrases still read on top.
+   - z-index: 3 → above the dim base video + tint + grade + centre pop
+     + CursorAperture reveal (z-2), but below the ripple overlay (z-4)
+     and BloomText (z-3) so the value phrases still read on top.
    - pointer-events: none — the canvas tracks the window cursor and must
      never block the title or CTAs.
    - mix-blend-mode: screen — the warm petals add light over the dark
@@ -15,7 +15,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
   mix-blend-mode: screen;
 }
 

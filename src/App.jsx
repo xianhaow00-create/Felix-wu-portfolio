@@ -6,6 +6,7 @@ import { Marquee } from './components/Marquee.jsx';
 import { About } from './components/About.jsx';
 import { Projects } from './components/Projects.jsx';
 import { PortfolioInterlude } from './components/PortfolioInterlude.jsx';
+import { EditorialMarquee } from './components/EditorialMarquee.jsx';
 import { Experience } from './components/Experience.jsx';
 import { Skills } from './components/Skills.jsx';
 import { Contact } from './components/Contact.jsx';
@@ -55,6 +56,7 @@ export default function App() {
         <Marquee />
         <About />
         <Projects />
+        <EditorialMarquee />
         <PortfolioInterlude />
         <Experience />
         <Skills />

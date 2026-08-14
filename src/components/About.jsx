@@ -15,12 +15,21 @@ export function About() {
               <span className="title-line"><span>away the <em>unnecessary</em> —</span></span>
               <span className="title-line"><span>and getting to the essence.</span></span>
             </h2>
-            <p className="about-subline serif-cn">
-              水是血脉，文是灵魂，速度是翅膀。<br />
-              设计是剥离多余，直抵事物本质。
-            </p>
+            {/* Round 42: the CN manifesto split across two lines. The
+                SECOND line ("设计是剥离多余…") stays here as a quiet
+                decorative typography block under the big title — its
+                design is unchanged from Round 39. The FIRST line
+                ("水是血脉…") was relocated to the Skills section. */}
           </div>
         </header>
+
+        {/* Round 39/42: the second-line motto reused as a small
+            decorative typography block below the title — small, italic,
+            muted, so it reads as ornament rather than a competing
+            paragraph. */}
+        <p className="about-deco-cn serif-cn reveal">
+          设计是剥离多余，直抵事物本质。
+        </p>
 
         {/* Editorial portrait stage — replaces the old portrait frame */}
         <PortraitStage />
