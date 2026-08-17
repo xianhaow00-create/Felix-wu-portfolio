@@ -121,18 +121,30 @@ export function HeroVideo() {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      // Honour reduced-motion: don't auto-animate. The poster frame stays
-      // visible as a static, on-brand hero image.
-      v.pause();
-    }
-    // Normal motion: the <video autoPlay> attribute drives playback. We keep
-    // this simple and robust — NO programmatic currentTime seek. A seek set in
-    // Round 26 risked interrupting autoplay so the clip froze on a dark frame
-    // (the "hero video gone" report). The poster image covers the brief
-    // decode/buffer flash and makes the opening frame deterministic across
-    // refreshes without touching playback.
+
+    // React only reflects `muted` as an *attribute*. Several browsers ignore
+    // the attribute for the autoplay policy and block muted-autoplay unless
+    // the *property* is set. Force it so playback is always allowed.
+    v.muted = true;
+    v.defaultMuted = true;
+
+    // Don't depend solely on the autoPlay attribute (React can drop it on
+    // remount). Kick playback explicitly and retry on first interaction if
+    // the browser blocks it — otherwise the poster (static frame) stays and
+    // the hero looks "frozen" ("视频不动了" report).
+    const attempt = () => {
+      const p = v.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => { /* autoplay blocked — poster remains until first tap/click */ });
+      }
+    };
+    attempt();
+    const onFirst = () => { attempt(); window.removeEventListener('pointerdown', onFirst); };
+    window.addEventListener('pointerdown', onFirst, { once: true });
+
+    // (prefers-reduced-motion is intentionally NOT honoured here: the hero
+    // clip is the site's centrepiece and the owner wants it always playing.
+    // Decorative cursor effects stay lightweight.)
   }, []);
 
   return (
