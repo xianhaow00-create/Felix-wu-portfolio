@@ -240,3 +240,20 @@
   .skill-grid, .skills-honors-grid { grid-template-columns: 1fr; }
   .skills-tools-list li { grid-template-columns: 100px 1fr 40px; }
 }
+
+/* ── Phones ─────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .skills-head { margin-bottom: 40px; }
+  .skills-deco-cn { margin: 0 0 40px; }
+  .skills-tools { margin-top: 64px; }
+  .skills-honors { margin-top: 64px; }
+  .skill-card { padding: 28px 24px 32px; }
+  .skill-card-title { font-size: 24px; }
+  /* Tighten the name/bar/percent columns so the bar keeps real width */
+  .skills-tools-list li {
+    grid-template-columns: 84px 1fr 34px;
+    gap: 12px;
+    font-size: 17px;
+  }
+  .skills-tools-pct { font-size: 10px; }
+}

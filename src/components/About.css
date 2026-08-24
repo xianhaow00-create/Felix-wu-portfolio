@@ -222,3 +222,17 @@
   .about-interests ul { grid-template-columns: 1fr; }
   .about-head { margin-bottom: 72px; }
 }
+
+/* ── Phones ─────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .about-head { margin-bottom: 56px; }
+  .about-bio {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+  .about-facts-list { gap: 24px 16px; }
+  .about-interests li { grid-template-columns: 104px 1fr; gap: 12px; }
+  .about-stat-num { font-size: 52px; }
+  .about-stats { gap: 24px 16px; }
+}

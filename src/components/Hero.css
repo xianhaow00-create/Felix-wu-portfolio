@@ -6,6 +6,11 @@
 .hero {
   position: relative;
   height: 100vh;
+  /* Mobile-friendly viewport unit: 100dvh tracks the *visible* area
+     (excludes the mobile browser URL bar) where supported, falling back
+     to 100vh. Keeps the hero filling the screen without the bottom row
+     hiding behind the browser chrome. */
+  height: 100dvh;
   /* Round 31: removed min-height: 760px. It forced the hero taller than a
      typical ~720px laptop viewport, pushing the bottom pills / corner
      stamps below the fold ("why doesn't it fit in one screen?"). Hero is
@@ -354,4 +359,42 @@
      with no competition. */
   .hero-frame { padding-bottom: 72px; }
   .hero-corner { bottom: 18px; }
+  /* The FlowerStage is gone, so the right-margin rails would otherwise
+     float over the title — hide them on narrow screens. */
+  .hero-rails { display: none; }
+}
+
+/* ── Phones ───────────────────────────────────────────────────────────
+   The hero is height:100dvh on desktop; on short phone screens we let it
+   grow to fit its content (height:auto + min-height:100dvh) so the bottom
+   scroll/tags row is never clipped by the hero's overflow:hidden. */
+@media (max-width: 720px) {
+  .hero {
+    height: auto;
+    min-height: 100dvh;
+  }
+  .hero-frame {
+    padding-top: 92px;
+    padding-bottom: 52px;
+  }
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 16px;
+  }
+  .hero-cta-row {
+    margin-top: 28px;
+  }
+  .hero-row--bottom {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-tags {
+    flex-wrap: wrap;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  .hero-corner {
+    bottom: 16px;
+  }
 }

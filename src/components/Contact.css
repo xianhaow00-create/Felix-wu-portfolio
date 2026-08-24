@@ -4,6 +4,7 @@
   color: var(--bg);
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -176,4 +177,22 @@
   .contact-side { display: none; }
   .contact-grid { grid-template-columns: 1fr; }
   .contact-mailto::after { right: -16px; }
+}
+
+/* ── Phones ───────────────────────────────────────────────────────────
+   Reposition the decorative ↗ arrow so it sits ABOVE the email (right:0)
+   instead of to its right — on a narrow screen the right-offset arrow
+   would otherwise clip past the gutter / get cut by overflow-x:clip. */
+@media (max-width: 720px) {
+  .contact-wrap { padding-top: 116px; }
+  .contact-mailto { margin-bottom: 56px; }
+  .contact-mailto::after {
+    right: 0;
+    top: -46px;
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  .contact-grid { gap: 24px; }
+  .contact-line { font-size: 19px; }
 }

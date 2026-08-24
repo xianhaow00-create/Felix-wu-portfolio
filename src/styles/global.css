@@ -58,6 +58,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  /* Stop iOS from auto-inflating font sizes on rotate / zoom */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -93,6 +96,13 @@ a {
 
 ul, ol {
   list-style: none;
+}
+
+/* Mobile polish: kill the blue tap flash on links/buttons and let
+   images/videos never exceed the viewport width. */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
 }
 
 ::selection {
