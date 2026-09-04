@@ -1,0 +1,130 @@
+.lockgate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f5f3ec;
+  background-image: radial-gradient(circle at 50% 30%, #fbfaf6 0%, #f5f3ec 60%, #efece2 100%);
+}
+
+.lockgate-card {
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  font-family: 'Newsreader', 'Noto Serif SC', serif;
+}
+
+.lockgate-mark {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #ff3b2f;
+  border-radius: 50%;
+  color: #ff3b2f;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.lockgate-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+.lockgate-sub {
+  margin: 8px 0 28px;
+  font-size: 14px;
+  color: #8a857a;
+  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+  font-weight: 400;
+}
+
+.lockgate-form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.lockgate-input {
+  flex: 1;
+  max-width: 180px;
+  padding: 13px 16px;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #1a1a1a;
+  background: #fff;
+  border: 1.5px solid #d8d3c6;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.lockgate-input:focus {
+  border-color: #ff3b2f;
+  box-shadow: 0 0 0 3px rgba(255, 59, 47, 0.14);
+}
+
+.lockgate-input--err {
+  border-color: #ff3b2f;
+  animation: lockgate-shake 0.32s ease;
+}
+
+@keyframes lockgate-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.lockgate-btn {
+  padding: 13px 20px;
+  font-size: 15px;
+  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+  font-weight: 500;
+  color: #fff;
+  background: #ff3b2f;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease;
+}
+
+.lockgate-btn:hover {
+  background: #e83329;
+}
+
+.lockgate-btn:active {
+  transform: scale(0.97);
+}
+
+.lockgate-err {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: #ff3b2f;
+  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+}
+
+.lockgate-foot {
+  margin: 34px 0 0;
+  font-size: 12px;
+  color: #b3ada0;
+  font-family: 'Inter', 'Noto Serif SC', sans-serif;
+  letter-spacing: 0.4px;
+}
+
+@media (max-width: 720px) {
+  .lockgate-title { font-size: 26px; }
+  .lockgate-form { flex-direction: column; align-items: stretch; }
+  .lockgate-input { max-width: none; }
+  .lockgate-btn { width: 100%; }
+}

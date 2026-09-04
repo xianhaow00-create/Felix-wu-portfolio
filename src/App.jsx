@@ -11,6 +11,7 @@ import { Experience } from './components/Experience.jsx';
 import { Skills } from './components/Skills.jsx';
 import { Contact } from './components/Contact.jsx';
 import { Cursor } from './components/Cursor.jsx';
+import LockGate from './components/LockGate.jsx';
 
 export default function App() {
   // Reveal-on-scroll using IntersectionObserver
@@ -48,20 +49,22 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
-      <Cursor />
-      <Navigation />
-      <main>
-        <Hero />
-        <Marquee />
-        <About />
-        <Projects />
-        <EditorialMarquee />
-        <PortfolioInterlude />
-        <Experience />
-        <Skills />
-        <Contact />
-      </main>
-    </div>
+    <LockGate>
+      <div className="app">
+        <Cursor />
+        <Navigation />
+        <main>
+          <Hero />
+          <Marquee />
+          <About />
+          <Projects />
+          <EditorialMarquee />
+          <PortfolioInterlude />
+          <Experience />
+          <Skills />
+          <Contact />
+        </main>
+      </div>
+    </LockGate>
   );
 }
