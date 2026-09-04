@@ -50,7 +50,7 @@ export default function LockGate({ children }) {
   return (
     <div className="lockgate" role="dialog" aria-modal="true" aria-label="Access code">
       <div className="lockgate-card">
-        <div className="lockgate-mark">FW</div>
+        <div className="lockgate-mark" aria-hidden="true">F</div>
         <h1 className="lockgate-title">Private Portfolio</h1>
         <p className="lockgate-sub">请输入访问密码 · Enter access code</p>
         <form onSubmit={submit} className="lockgate-form" autoComplete="off">
